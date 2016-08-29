@@ -24,6 +24,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.linalg._
 import MDLPDiscretizer._
 import org.apache.spark.broadcast.Broadcast
+import FeatureUtils.findMidPoint
 
 import scala.collection.Map
 
@@ -71,7 +72,7 @@ class MDLPDiscretizer private (val data: RDD[LabeledPoint],
             accumFreqs = Array.fill(nLabels)(0L)
           } else if (isBoundary(freqs, lastFreqs)) {
             // new boundary point: midpoint between this point and the previous one
-            result = ((lastK, (x + lastX) / 2), accumFreqs.clone) +: result
+            result = ((lastK, findMidPoint(x, lastX)), accumFreqs.clone) +: result
             accumFreqs = Array.fill(nLabels)(0L)
           }
           
@@ -201,6 +202,7 @@ class MDLPDiscretizer private (val data: RDD[LabeledPoint],
 
   /**
     * Divide RDD into two categories according to the number of points by feature.
+    *
     * @return find threshold for both sorts of attributes - those with many values, and those with few.
     */
   def findAllThresholds(elementsByPart: Int, maxBins: Int,

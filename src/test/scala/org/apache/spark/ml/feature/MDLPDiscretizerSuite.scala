@@ -175,7 +175,7 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
 
     assertResult(
       """-Infinity, Infinity;
-        |-Infinity, 6.6229, 7.1833496, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.74585, 56.7125, Infinity;
+        |-Infinity, 6.6229, 7.18335, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.74585, 56.7125, Infinity;
         |-Infinity, 1.5, 2.5, Infinity;
         |-Infinity, Infinity;
         |-Infinity, Infinity;
@@ -198,7 +198,7 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
 
     assertResult(
       """-Infinity, Infinity;
-        |-Infinity, 7.175, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.795851, 74.375, Infinity;
+        |-Infinity, 7.175, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.79585, 74.375, Infinity;
         |-Infinity, 1.5, 2.5, Infinity;
         |-Infinity, Infinity;
         |-Infinity, Infinity
@@ -216,7 +216,7 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
 
     assertResult(
       """-Infinity, Infinity;
-        |-Infinity, 6.6229, 7.1833496, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.74585, 56.7125, Infinity;
+        |-Infinity, 6.6229, 7.18335, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.74585, 56.7125, Infinity;
         |-Infinity, 1.5, 2.5, Infinity;
         |-Infinity, Infinity;
         |-Infinity, Infinity;
@@ -235,7 +235,7 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
 
     assertResult(
       """-Infinity, Infinity;
-        |-Infinity, 6.6229, 7.1833496, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.74585, 29.4125, 56.7125, Infinity;
+        |-Infinity, 6.6229, 7.18335, 7.2396, 7.6875, 7.7625, 13.20835, 15.3729, 15.74585, 29.4125, 56.7125, Infinity;
         |-Infinity, 1.5, 2.5, Infinity;
         |-Infinity, 2.5, Infinity;
         |-Infinity, Infinity;
@@ -309,7 +309,7 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
 
     assertResult(
       """-Infinity, 14.75, Infinity;
-        |-Infinity, 13.825001, 28.2, 41.9896, 44.65, 47.0, 51.67085, 152.50626, Infinity;
+        |-Infinity, 13.825, 28.2, 41.9896, 44.65, 47.0, 51.67085, 152.50626, Infinity;
         |-Infinity, 2.5, Infinity;
         |-Infinity, Infinity;
         |-Infinity, 1.44359817E12, Infinity
@@ -324,7 +324,7 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
     val model = getDiscretizerModel(df, Array("sepallength", "sepalwidth", "petallength", "petalwidth"), "iristype")
 
     assertResult(
-      """-Infinity, 5.55, 6.1499996, Infinity;
+      """-Infinity, 5.55, 6.15, Infinity;
         |-Infinity, 3.35, Infinity;
         |-Infinity, 2.45, 4.75, Infinity;
         |-Infinity, 0.8, 1.75, Infinity
@@ -340,9 +340,9 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
       "iristype", maxBins = 100, maxByPart = 10000, stoppingCriterion = -0.01)
 
     assertResult(
-      """-Infinity, 5.55, 6.1499996, Infinity;
+      """-Infinity, 5.55, 6.15, Infinity;
         |-Infinity, 2.95, 3.35, Infinity;
-        |-Infinity, 2.45, 4.75, 5.1499996, Infinity;
+        |-Infinity, 2.45, 4.75, 5.15, Infinity;
         |-Infinity, 0.8, 1.75, Infinity
         |""".stripMargin.replaceAll(System.lineSeparator(), "")) {
       model.splits.map(a => a.mkString(", ")).mkString(";")

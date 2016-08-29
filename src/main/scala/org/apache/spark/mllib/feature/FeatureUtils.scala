@@ -28,7 +28,7 @@ import scala.collection.mutable
 @Experimental
 object FeatureUtils {
 
-
+  /** Natural log of 2. Divide by this to convert to base 2 logarithm */
   private val LOG2 = math.log(2)
 
   /** @return log base 2 of x */
@@ -86,6 +86,23 @@ object FeatureUtils {
       case other =>
         throw new UnsupportedOperationException(
           s"Only sparse and dense vectors are supported but got ${other.getClass}.")
+    }
+  }
+
+
+  /**
+    * @param low low end of range
+    * @param high high end of range
+    * @return the number rounded to the specified place
+    */
+  def findMidPoint(low:Double, high: Double): Float = {
+    val extent = high - low
+    val mid = (high + low) / 2
+    if (mid.isNaN) Float.NaN
+    else {
+      val magnitude = if (extent > 0) Math.log10(extent) else 0
+      val place = -Math.floor(5 - magnitude).toInt
+      BigDecimal(mid).setScale(-place, BigDecimal.RoundingMode.HALF_UP).toFloat
     }
   }
 }
