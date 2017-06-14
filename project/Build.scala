@@ -1,5 +1,5 @@
-import sbt._
-import sbt.Keys._
+import sbt.{Credentials, _}
+import sbt.Keys.{credentials, _}
 import sbtsparkpackage.SparkPackagePlugin.autoImport._
 
 object ProjectBuild extends Build {
@@ -7,16 +7,17 @@ object ProjectBuild extends Build {
     id = "root",
     base = file("."),
     settings = Defaults.coreDefaultSettings ++ Seq(
-      	name := "spark-MDLP-discretization",
-	version := "0.2-SPARK-2.1.1-SNAPSHOT",
+	name := "spark-MDLP-discretization",
+	version := "0.2-SPARK-2.1.1",
 	organization := "org.apache.spark",
 	scalaVersion := "2.11.6",
 	spName := "apache/spark-MDLP-discretization",
 	sparkVersion := "2.1.1",
 	sparkComponents += "mllib",
+	publishTo := Some("Artifactory Realm" at "http://esi-components.esi-group.com/artifactory/release"),
+	credentials += Credentials(Path.userHome / ".m2" / ".credentials"),
 	publishMavenStyle := true,
 	licenses += "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"),
-	credentials += Credentials(Path.userHome / ".ivy2" / ".sbtcredentials"),
 
 	libraryDependencies ++= Seq(
 		"joda-time" % "joda-time" % "2.9.4",
