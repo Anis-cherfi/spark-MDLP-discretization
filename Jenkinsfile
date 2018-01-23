@@ -10,9 +10,6 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '7')) // keep only recent builds
     }
-    environment {
-        //env vars. e.g. SPARK_DEV_HOME = "${WORKSPACE}"
-    }
     triggers {
         pollSCM('H/15 * * * *')
         //upstream(upstreamProjects: "<comma delimited list>", threshold: hudson.model.Result.SUCCESS)
