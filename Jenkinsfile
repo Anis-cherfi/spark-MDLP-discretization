@@ -39,31 +39,27 @@ pipeline {
         stage('deploy') {
             steps {
                 cmd("sbt publish")
+                script {
+                    currentBuild.result = 'SUCCESS'
+                }
             }
         }
     }
 
     post {
         always {
-            junit "target/test-reports/*.xml"
+            step([$class: 'Mailer',
+                  notifyEveryUnstableBuild: true,
+                  recipients: env.EMAIL_NOTIFICATION_LIST,
+                  sendToIndividuals: true])
             step([$class: 'JavadocArchiver', javadocDir: 'target/scala-2.11/api', keepAll: true])
-        }
-        success {
-            //if (!"SUCCESS".equals(currentBuild.getPreviousBuild())) {
-                echo 'This build was SUCCESSFUL!'
-                mail to: 'bbe@esi-group.com',
-                     subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
-                     body: "This build succeeded: ${env.BUILD_URL}"
-            //}
+            junit "target/test-reports/*.xml"
         }
         failure {
             echo 'This build FAILED!'
-            mail to: 'bbe@esi-group.com',
-                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                 body: """Something is wrong with ${env.BUILD_URL}.
-                   It is failing in ${env.FAILURE_STAGE} stage.
-                   \u2639 ${env.JOB_NAME} (${env.BUILD_NUMBER}) has failed.
-                   """
+            script {
+                currentBuild.result = 'FAILURE'
+            }
         }
         unstable {
             echo 'This build is unstable.'

@@ -14,7 +14,7 @@ object ProjectBuild extends Build {
 	spName := "apache/spark-MDLP-discretization",
 	sparkVersion := "2.1.1",
 	sparkComponents += "mllib",
-      publishTo := Some("Artifactory Realm" at "http://esi-components.esi-group.com/artifactory/snapshot"),
+			publishTo := Some("Artifactory Realm" at "http://esi-components.esi-group.com/artifactory/snapshot"),
 	credentials += Credentials(Path.userHome / ".m2" / ".credentials"),
 	publishMavenStyle := true,
 	licenses += "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"),
