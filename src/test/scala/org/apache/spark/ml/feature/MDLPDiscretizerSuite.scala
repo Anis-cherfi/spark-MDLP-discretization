@@ -53,7 +53,8 @@ class MDLPDiscretizerSuite extends FunSuite with BeforeAndAfterAll {
       fail("should not get here")
     }
     catch {
-      case err: AssertionError => // expected
+      case assertionErr: AssertionError => // expected prior to Spark 2.3
+      case analysisErr: org.apache.spark.sql.AnalysisException => // expected since spark 2.3
       case ex: Throwable => fail("Unexpected exception :"+ ex.printStackTrace());
     }
   }
